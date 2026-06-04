@@ -12,8 +12,8 @@ fn main() {
     println!("Success!");
 }
 
-fn sum(x, y: i32) {
-    x + y;
+fn sum(x: i32, y: i32) -> i32 {
+    x + y
 }
 ```
 
@@ -25,7 +25,7 @@ fn main() {
 }
 
 // Replace i32 with another type
-fn print() -> i32 {
+fn print() {
    println!("Success!");
 }
 ```
@@ -44,7 +44,7 @@ fn main() {
 
 fn never_return() -> ! {
     // Implement this function, don't modify the fn signatures
-    
+    panic!("Success!")
 }
 ```
 
@@ -74,7 +74,7 @@ fn get_option(tp: u8) -> Option<i32> {
 
 // IMPLEMENT this function in THREE ways
 fn never_return_fn() -> ! {
-    
+    unimplemented!()  // or todo!() / panic!()
 }
 ```
 
@@ -83,7 +83,7 @@ fn never_return_fn() -> ! {
 
 fn main() {
     // FILL in the blank
-    let b = __;
+    let b = false;
 
     let _v = match b {
         true => 1,
