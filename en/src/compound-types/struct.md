@@ -10,11 +10,13 @@ struct Person {
     age: u8,
     hobby: String
 }
+
 fn main() {
     let age = 30;
     let p = Person {
         name: String::from("sunface"),
         age,
+        hobby: "dancing".to_string()
     };
 
     println!("Success!");
@@ -41,7 +43,7 @@ fn main() {
 } 
 
 // Fill the blank to make the code work
-fn do_something_with_unit(u: __) {   }
+fn do_something_with_unit(u: Unit) {   }
 ```
 
 3. 🌟🌟🌟 Tuple struct looks similar to tuples, it has added meaning the struct name provides but has no named fields. It's useful when you want to give the whole tuple a name, but don't care about the fields's names.
@@ -52,17 +54,17 @@ fn do_something_with_unit(u: __) {   }
 struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 fn main() {
-    let v = Point(__, __, __);
+    let v = Color(0, 127, 255);
     check_color(v);
 
     println!("Success!");
 }   
 
 fn check_color(p: Color) {
-    let (x, _, _) = p;
+    let Color(x, _, _) = p;
     assert_eq!(x, 0);
     assert_eq!(p.1, 127);
-    assert_eq!(__, 255);
+    assert_eq!(p.2, 255);
  }
 ```
 
@@ -79,7 +81,7 @@ struct Person {
 }
 fn main() {
     let age = 18;
-    let p = Person {
+    let mut p = Person {
         name: String::from("sunface"),
         age,
     };
@@ -88,7 +90,7 @@ fn main() {
     p.age = 30;
 
     // Fill the blank
-    __ = String::from("sunfei");
+    p.name = String::from("sunfei");
 
     println!("Success!");
 }
@@ -109,7 +111,7 @@ fn main() {
 fn build_person(name: String, age: u8) -> Person {
     Person {
         age,
-        __
+        name
     }
 }
 ```
@@ -140,7 +142,7 @@ fn main() {
 fn set_email(u: User) -> User {
     User {
         email: String::from("contact@im.dev"),
-        __
+        ..u
     }
 }
 ```
@@ -151,7 +153,7 @@ fn set_email(u: User) -> User {
 ```rust,editable
 
 // Fill the blanks to make the code work
-#[__]
+#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -166,7 +168,7 @@ fn main() {
 
     dbg!(&rect1); // Print debug info to stderr
 
-    println!(__, rect1); // Print debug info to stdout
+    println!("{:?}", rect1); // Print debug info to stdout
 }
 ```
 
@@ -221,7 +223,7 @@ fn main() {
         data: "Rust By Practice".to_string()
     };
 
-    let _name = f.name;
+    let _name = f.name.clone();
 
     // ONLY modify this line
     println!("{}, {}, {:?}",f.name, f.data, f);
