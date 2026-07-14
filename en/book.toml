@@ -4,9 +4,8 @@ description = "Learn Rust with Example, Exercise and real Practice, written with
 authors = ["sunface, https://im.dev"]
 language = "en"
 
-[output.html.playpen]
+[output.html.playground]
 editable = true
-editor = "ace"
 
 [output.html.fold]
 enable = true
