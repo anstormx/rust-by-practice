@@ -19,15 +19,15 @@ fn generic<T>(_s: SGen<T>) {}
 
 fn main() {
     // Using the non-generic functions
-    reg_fn(__);          // Concrete type.
-    gen_spec_t(__);   // Implicitly specified type parameter `A`.
-    gen_spec_i32(__); // Implicitly specified type parameter `i32`.
+    reg_fn(S(A));          // Concrete type.
+    gen_spec_t(SGen(A));   // Implicitly specified type parameter `A`.
+    gen_spec_i32(SGen(1)); // Implicitly specified type parameter `i32`.
 
     // Explicitly specified type parameter `char` to `generic()`.
-    generic::<char>(__);
+    generic::<char>(SGen('a'));
 
     // Implicitly specified type parameter `char` to `generic()`.
-    generic(__);
+    generic(SGen('a'));
 
     println!("Success!");
 }
@@ -37,8 +37,9 @@ fn main() {
 ```rust,editable
 
 // Implement the generic function below.
-fn sum
-
+fn sum<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
+    x + y
+}
 fn main() {
     assert_eq!(5, sum(2i8, 3i8));
     assert_eq!(50, sum(20, 30));
@@ -55,7 +56,10 @@ fn main() {
 ```rust,editable
 
 // Implement struct Point to make it work.
-
+struct Point<T> {
+    x: T,
+    y: T
+}
 
 fn main() {
     let integer = Point { x: 5, y: 10 };
@@ -69,9 +73,9 @@ fn main() {
 ```rust,editable
 
 // Modify this struct to make the code work
-struct Point<T> {
+struct Point<T,U> {
     x: T,
-    y: T,
+    y: U,
 }
 
 fn main() {
@@ -86,12 +90,12 @@ fn main() {
 ```rust,editable
 
 // Add generic for Val to make the code work, DON'T modify the code in `main`.
-struct Val {
-    val: f64,
+struct Val<T> {
+    val: T,
 }
 
-impl Val {
-    fn value(&self) -> &f64 {
+impl<T> Val<T> {
+    fn value(&self) -> &T {
         &self.val
     }
 }
@@ -115,7 +119,12 @@ struct Point<T, U> {
 
 impl<T, U> Point<T, U> {
     // Implement mixup to make it work, DON'T modify other code.
-    fn mixup
+    fn mixup<V, W>(self, p: Point<V, W>) -> Point<T, W> {
+        Point {
+            x: self.x,
+            y: p.y 
+        }
+    }
 }
 
 fn main() {
@@ -140,17 +149,16 @@ struct Point<T> {
     y: T,
 }
 
-impl Point<f32> {
-    fn distance_from_origin(&self) -> f32 {
+impl Point<f64> {
+    fn distance_from_origin(&self) -> f64 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 }
 
 fn main() {
-    let p = Point{x: 5, y: 10};
+    let p = Point{x: 5.0, y: 10.0};
     println!("{}",p.distance_from_origin());
 }
 ```
 
 > You can find the solutions [here](https://github.com/sunface/rust-by-practice/blob/master/solutions/generics-traits/generics.md)(under the solutions path), but only use it when you need it
-
